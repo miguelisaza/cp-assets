@@ -1,4 +1,5 @@
 {
+	"parser": "babel-eslint",
 	"plugins": [
 		"react",
 		"jsx-control-statements"
@@ -14,6 +15,7 @@
 		"browser": true
 	},
 	"rules" : {
+		"jsx-a11y/label-has-associated-control" :["off"],
 		"react/jsx-one-expression-per-line": ["off"],
 		"react/jsx-no-undef": ["error", { "allowGlobals": true }],
 		"react/jsx-indent": ["error", "tab"],

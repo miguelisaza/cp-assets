@@ -1,0 +1,17 @@
+.tag-picker {
+	margin-bottom: 2rem;
+	.option-list {
+		margin-top: 1rem;
+		li {
+			margin-right: 0.5rem;
+			margin-bottom: 0.5rem;
+			display: inline-block;
+			button span {
+				background-color: white;
+				color: #2b2e4a;
+				margin-left: .5rem;
+			}
+		}
+	}
+
+}

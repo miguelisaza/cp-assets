@@ -1,13 +1,20 @@
 export const TAG_LIST = [
-	'tag1',
-	'tag2',
-	'tag3',
-	'tag4',
+	'Exclusive',
+	'Recent',
+	'Old',
+	'Interview',
+	'Song',
 ];
 
-export const CATEGORIES = [
-	'photos',
-	'video',
-	'documents',
-	'audio',
+export const ASSET_CATEGORIES = [
+	'Photos',
+	'Video',
+	'Documents',
+	'Audio',
+	'Other',
 ];
+
+export default {
+	TAG_LIST,
+	ASSET_CATEGORIES,
+};

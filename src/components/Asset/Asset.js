@@ -30,7 +30,7 @@ class AssetCard extends Component {
 					<div className="asset-title">
 						<h3>{assetName}</h3>
 						<div className="tag-container">
-							{tags.map((tag) => <span className="badge rounded-pill">{tag}</span>)}
+							{tags.map((tag) => <span key={tag} className="badge rounded-pill">{tag}</span>)}
 						</div>
 					</div>
 					<p>{description}</p>
