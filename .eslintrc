@@ -1,0 +1,46 @@
+{
+	"plugins": [
+		"react",
+		"jsx-control-statements"
+	],
+	"extends" : [
+		"plugin:react/recommended",
+		"airbnb",
+		"plugin:jsx-control-statements/recommended"
+	],
+	"env": {
+		"es6": true,
+		"node": true,
+		"browser": true
+	},
+	"rules" : {
+		"react/jsx-one-expression-per-line": ["off"],
+		"react/jsx-no-undef": ["error", { "allowGlobals": true }],
+		"react/jsx-indent": ["error", "tab"],
+		"react/jsx-indent-props": ["error", "tab"],
+		"react/jsx-fragments": ["off"],
+		"react/jsx-filename-extension": ["off"],
+		"react/forbid-prop-types": ["off"],
+		"import/no-unresolved": ["off"],
+		"import/no-cycle": ["error", { "maxDepth": 3 }],
+		"no-underscore-dangle": ["off"],
+		"no-plusplus": ["off"],
+		"max-len": ["warn", { "code": 160, "tabWidth": 4 }],
+		"indent": ["error", "tab", { "SwitchCase": 1 }],
+		"no-tabs": ["off"],
+		"import/extensions": ["off"],
+		"camelcase": [
+			"error", {
+				"ignoreDestructuring": true,
+				"allow": [ "^UNSAFE_" ]
+			}
+		],
+		"key-spacing": [
+			"error",
+			{
+				"beforeColon": true,
+				"align": "colon"
+			}
+		]
+	}
+}

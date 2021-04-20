@@ -1,0 +1,87 @@
+@import "bootstrap";
+
+// fonts
+$primary   : #000000;
+$secondary : #FFFFFF;
+
+// unposted theme
+$night-blue  : #2b2e4a;
+$darker-red  : #903749;
+$soft-purple : #53354a;
+
+// posted colors 
+$leaf-green : #1e6f5c;
+$turquoise  : #29bb89;
+$emerald    : #289672;
+
+
+.asset {
+	margin: 1rem;
+	border: 1px solid black;
+	border-radius: 0.6rem;
+
+	.asset-header {
+		display: flex;
+		justify-content: space-between;
+		border-top-right-radius: 7px;
+		border-top-left-radius: 7px;
+		position: relative;
+		padding: 0.5rem;
+	}
+
+	.asset-body {
+		padding: 1rem;
+
+		.asset-title {
+			display: flex;
+			justify-content: space-between;
+			align-items: baseline;
+		}
+	}
+
+	.tag-container {
+		.badge {
+			margin-right: 0.5rem;
+			padding: 0.5rem;
+		}
+	}
+
+	// modifiers
+	&.published {
+		border-color: $leaf-green;
+
+		.asset-header {
+			color: $secondary;
+			background-color : $leaf-green;
+		}
+
+		.badge {
+			color: $secondary;
+			background-color: $leaf-green;
+		}
+
+		.btn-primary {
+			@include button-variant($turquoise, $emerald)
+		}
+		
+	}
+
+	&.unpublished {
+		border-color: $soft-purple;
+
+		.asset-header {
+			color: $secondary;
+			background-color : $soft-purple;
+		}
+
+		.badge {
+			color: $secondary;
+			background-color: $soft-purple;
+		}
+
+		.btn-primary {
+			@include button-variant($darker-red, $soft-purple)
+		}
+	}
+
+}
