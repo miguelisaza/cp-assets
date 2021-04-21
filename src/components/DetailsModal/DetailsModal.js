@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import { ASSET_CATEGORIES, TAG_LIST } from '../../constants';
 import { TagPicker } from '..';
@@ -8,40 +9,74 @@ class DetailsModal extends Component {
 		super(props);
 
 		this.initalState = {
-			isOpen      : true,
-			isEditing   : false,
-			assetName   : '',
-			description : '',
-			category    : '',
-			tags        : [],
+			isOpen    : false,
+			isEditing : false,
+			form      : {
+				id          : null,
+				assetName   : '',
+				description : '',
+				category    : '',
+				tags        : [],
+			},
 		};
 
 		this.state = { ...this.initalState };
 	}
 
-	closeModal = () => this.setState(this.initalState);
+	openModal = (form = {}) => {
+		const isEditing = Object.entries(form).length > 0;
 
-	updateField = ({ target : { name, value } }) => this.setState({ [name] : value })
+		this.setState({ isOpen : true, form : isEditing ? form : this.initalState.form, isEditing });
+	}
+
+	closeModal = () => this.setState({ isOpen : false });
+
+	resetModal = () => this.setState(this.initalState);
+
+	updateField = ({ target : { name, value } }) => this.setState((prevState) => ({
+		form : {
+			...prevState.form,
+			[name] : value,
+		},
+	}))
 
 	addTag = ({ target : { value } }) => {
-		const { tags } = this.state;
+		const { form : { tags } } = this.state;
 
 		const newTag = TAG_LIST.find((item) => item.toString() === value);
-		this.setState({ tags : [...tags, newTag] });
+		this.setState((prevState) => ({ form : { ...prevState.form, tags : [...tags, newTag] } }));
 	}
 
 	removeTag = (value) => {
 		this.setState((prevState) => ({
-			tags : prevState.tags.filter((item) => item !== value),
+			form : {
+				...prevState.form,
+				tags : prevState.tags.filter((item) => item !== value),
+			},
 		}));
+	}
+
+	submitAsset = () => {
+		const { onSubmit } = this.props;
+		const { form } = this.state;
+
+		onSubmit(form);
+		this.closeModal();
 	}
 
 	render() {
 		const {
-			isOpen, isEditing, assetName, description, category, tags,
+			isOpen, isEditing, form : {
+				assetName, description, category, tags,
+			},
 		} = this.state;
+
 		return (
-			<Modal show={isOpen} onHide={this.closeModal}>
+			<Modal
+				show={isOpen}
+				onHide={this.closeModal}
+				onExited={this.resetModal}
+			>
 				<Modal.Header>
 					<Modal.Title>
 						{`${isEditing ? 'Edit' : 'Add'} Asset`}
@@ -100,11 +135,15 @@ class DetailsModal extends Component {
 				</Modal.Body>
 				<Modal.Footer>
 					<button type="button" className="btn btn-xs-block btn-danger" onClick={this.closeModal}>Cancel</button>
-					<button type="button" className="btn btn-primary">Save</button>
+					<button type="button" className="btn btn-primary" onClick={this.submitAsset}>Save</button>
 				</Modal.Footer>
 			</Modal>
 		);
 	}
 }
+
+DetailsModal.propTypes = {
+	onSubmit : PropTypes.func.isRequired,
+};
 
 export default DetailsModal;

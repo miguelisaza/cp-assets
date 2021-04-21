@@ -1,12 +1,12 @@
 import React from 'react';
-import { Asset, DetailsModal } from './components';
+import AssetList from './pages/AssetList/AssetList';
+import { DetailsModal } from './components';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
 
 function App() {
 	return (
 		<div className="App">
-			<Asset />
+			<AssetList />
 			<DetailsModal />
 		</div>
 	);
