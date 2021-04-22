@@ -2,6 +2,8 @@
 import React, { Component } from 'react';
 import { Asset, DetailsModal, ConfirmationModal } from '../../components';
 
+import './AssetList.scss';
+
 class AssetList extends Component {
 	constructor(props) {
 		super(props);
@@ -60,10 +62,19 @@ class AssetList extends Component {
 	render() {
 		const { assetList } = this.state;
 		return (
-			<div id="asset-list">
-				{ assetList.map((asset) => (
-					<Asset {...asset} onEdit={this.editAsset} onDelete={this.deleteAsset} />
-				)) }
+			<div className="container">
+				<div id="list-header" className="d-none d-md-flex">
+					<div className="col-2">Name</div>
+					<div className="col-4">Description</div>
+					<div className="col-2">Category</div>
+					<div className="col-2">Tags</div>
+					<div className="col-2">Actions</div>
+				</div>
+				<div id="asset-list">
+					{ assetList.map((asset) => (
+						<Asset {...asset} onEdit={this.editAsset} onDelete={this.deleteAsset} />
+					)) }
+				</div>
 				<div className="text-center">
 					<button
 						type="button"

@@ -16,12 +16,11 @@ $emerald    : #289672;
 
 
 .asset {
-	margin: 1rem;
+	margin-bottom: 1rem;
 	border: 1px solid black;
 	border-radius: 0.6rem;
 
 	.asset-header {
-		display: flex;
 		justify-content: space-between;
 		border-top-right-radius: 7px;
 		border-top-left-radius: 7px;
@@ -32,11 +31,11 @@ $emerald    : #289672;
 	.asset-body {
 		padding: 1rem;
 
-		.asset-title {
-			display: flex;
-			justify-content: space-between;
-			align-items: baseline;
+		.asset-name {
+			font-size: 2rem;
+			align-items: center;
 		}
+
 	}
 
 	.tag-container {
@@ -84,4 +83,27 @@ $emerald    : #289672;
 		}
 	}
 
+}
+
+@media (min-width: 768px) {
+	.asset {
+		margin-bottom: 0;
+		border-radius: 0;
+		border-top: none;
+
+		.asset-body {
+			.asset-name {
+				font-size: 1rem;
+			}
+		}
+	}
+		// modifiers
+		&.published {
+			background-color: transparentize($color: $leaf-green, $amount: 0.75);
+		}
+	
+		&.unpublished {
+			background-color: transparentize($color: $soft-purple, $amount: 0.75);
+
+		}
 }

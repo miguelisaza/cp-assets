@@ -24,7 +24,7 @@ class ConfirmationModal extends Component {
 
 	closeModal = () => this.setState({ isOpen : false });
 
-	resetModal = () => this.setState(this.initialState);
+	resetModal = () => this.setState(this.initialStatwe);
 
 	submitAction = (type) => {
 		const { onConfirm, onCancel } = this.state;
