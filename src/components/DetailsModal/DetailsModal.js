@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
+import FileSaver from 'file-saver';
 import { ASSET_CATEGORIES, TAG_LIST } from '../../constants';
-import { TagPicker } from '..';
+import { TagPicker, FileBox } from '..';
+
+import './DetailsModal.scss';
 
 class DetailsModal extends Component {
 	constructor(props) {
@@ -17,20 +20,24 @@ class DetailsModal extends Component {
 			newTagName        : '',
 			form              : {
 				id          : null,
+				isPublished : false,
 				assetName   : '',
 				description : '',
 				category    : '',
 				tags        : [],
+				assetFiles  : [],
 			},
 		};
 
 		this.state = { ...this.initalState };
 	}
 
-	openModal = (form = {}) => {
-		const isEditing = Object.entries(form).length > 0;
-
-		this.setState({ isOpen : true, form : isEditing ? form : this.initalState.form, isEditing });
+	openModal = (form = {}, isEditing = false) => {
+		this.setState({
+			isOpen : true,
+			form   : isEditing ? form : { ...this.initalState.form, assetFiles : form?.assetFiles || [] },
+			isEditing,
+		});
 	}
 
 	closeModal = () => this.setState({ isOpen : false });
@@ -45,11 +52,15 @@ class DetailsModal extends Component {
 	}))
 
 	createTag = () => {
-		const { newTagName } = this.state;
+		const { newTagName, form : { tags } } = this.state;
 
 		this.tagList.push(newTagName);
 
-		this.setState({ tagCreationToggle : false });
+		this.setState((prevState) => ({
+			tagCreationToggle : false,
+			form              : { ...prevState.form, tags : [...tags, newTagName] },
+			newTagName        : '',
+		}));
 	}
 
 	toggleTagField = () => this.setState((prevState) => ({ tagCreationToggle : !prevState.tagCreationToggle }));
@@ -62,10 +73,35 @@ class DetailsModal extends Component {
 	}
 
 	removeTag = (value) => {
+		const { form : { tags } } = this.state;
 		this.setState((prevState) => ({
 			form : {
 				...prevState.form,
-				tags : prevState.tags.filter((item) => item !== value),
+				tags : tags.filter((item) => item !== value),
+			},
+		}));
+	}
+
+	attachFiles = (files) => {
+		const { form : { assetFiles } } = this.state;
+
+		this.setState((prevState) => ({
+			form : {
+				...prevState.form,
+				assetFiles : assetFiles.length !== 0 ? assetFiles.concat(files) : files,
+			},
+		}));
+	}
+
+	downloadFile = (file) => {
+		FileSaver.saveAs(file, file.name);
+	}
+
+	deleteFile = (file) => {
+		this.setState((prevState) => ({
+			form : {
+				...prevState.form,
+				assetFiles : prevState.form.assetFiles.filter((f) => f.name !== file.name),
 			},
 		}));
 	}
@@ -82,7 +118,7 @@ class DetailsModal extends Component {
 		const {
 			isOpen, isEditing, tagCreationToggle, newTagName,
 			form : {
-				assetName, description, category, tags,
+				assetName, description, category, tags, assetFiles,
 			},
 		} = this.state;
 
@@ -136,16 +172,17 @@ class DetailsModal extends Component {
 						</div>
 						<div className="form-group">
 							<label htmlFor="select-tags">Tags</label>
-							<button type="button" onClick={this.toggleTagField} className="btn btn-link pull-right">Add tag</button>
+							<button type="button" onClick={this.toggleTagField} className="btn btn-link float-right">Add tag</button>
 							{ tagCreationToggle && (
 								<div className="input-group my-2">
 									<input
 										type="text"
 										className="form-control"
-										placeholder="Tag name"
-										aria-label="Tag name"
+										placeholder="New tag name"
+										aria-label="New tag name"
 										aria-describedby="tag-create"
 										onChange={({ target : { value } }) => { this.setState({ newTagName : value }); }}
+										onKeyPress={({ key }) => { if (key === 'Enter') this.createTag(); }}
 										value={newTagName}
 									/>
 									<button className="btn btn-outline-primary" type="button" id="tag-create" onClick={this.createTag}>Create</button>
@@ -162,6 +199,20 @@ class DetailsModal extends Component {
 							/>
 						</div>
 					</form>
+					{ assetFiles.length > 0 && (
+						<div>
+							<strong>Asset files: </strong>
+							{assetFiles.map((file) => (
+								<div className="file">
+									{file.name}
+									<br />
+									<button type="button" className="btn btn-link" onClick={() => this.downloadFile(file)}>Download</button>
+									<button type="button" className="btn btn-link" onClick={() => this.deleteFile(file)}>Delete</button>
+								</div>
+							))}
+						</div>
+					) }
+					<FileBox onFileLoad={this.attachFiles} />
 				</Modal.Body>
 				<Modal.Footer>
 					<button type="button" className="btn btn-xs-block btn-danger" onClick={this.closeModal}>Cancel</button>

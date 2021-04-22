@@ -16,7 +16,7 @@ class FileBox extends Component {
 				<form>
 					<div className="form-group files">
 						<label>Upload your assets</label>
-						<input onChange={this.uploadFile} type="file" className="form-control" multiple="" />
+						<input onChange={this.uploadFile} type="file" className="form-control" multiple />
 					</div>
 				</form>
 			</div>

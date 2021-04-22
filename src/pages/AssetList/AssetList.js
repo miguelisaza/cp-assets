@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
-import { Asset, DetailsModal, ConfirmationModal } from '../../components';
+import {
+	Asset, DetailsModal, ConfirmationModal, FileBox,
+} from '../../components';
 
 import './AssetList.scss';
 
@@ -12,12 +14,12 @@ class AssetList extends Component {
 			assetList : [
 				{
 					id          : 0,
+					isPublished : true,
 					assetName   : 'Travel photos',
 					description : 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, eos',
 					category    : 'Photos',
 					tags        : ['travel', 'funny', 'photos'],
-					isPublished : true,
-					/* assetFile   : '', */
+					assetFiles  : [],
 				},
 			],
 		};
@@ -48,7 +50,7 @@ class AssetList extends Component {
 	editAsset = (id) => {
 		const { assetList } = this.state;
 
-		this._detailsModal.openModal(assetList.find((asset) => asset.id === id));
+		this._detailsModal.openModal(assetList.find((asset) => asset.id === id), true);
 	}
 
 	deleteAsset = (id) => {
@@ -59,10 +61,15 @@ class AssetList extends Component {
 		});
 	}
 
+	receiveFiles = (files) => {
+		this._detailsModal.openModal({ assetFiles : files });
+	}
+
 	render() {
 		const { assetList } = this.state;
 		return (
 			<div className="container">
+				<h1 className="text-center my-2">Asset List</h1>
 				<div id="list-header" className="d-none d-md-flex">
 					<div className="col-2">Name</div>
 					<div className="col-4">Description</div>
@@ -75,7 +82,7 @@ class AssetList extends Component {
 						<Asset {...asset} onEdit={this.editAsset} onDelete={this.deleteAsset} />
 					)) }
 				</div>
-				<div className="text-center">
+				<div className="text-center my-2">
 					<button
 						type="button"
 						className="btn btn-primary"
@@ -84,6 +91,7 @@ class AssetList extends Component {
 					>Add asset with modal
 					</button>
 				</div>
+				<FileBox onFileLoad={this.receiveFiles} />
 				<DetailsModal
 					onSubmit={this.saveAsset}
 					ref={(ref) => { this._detailsModal = ref; }}
