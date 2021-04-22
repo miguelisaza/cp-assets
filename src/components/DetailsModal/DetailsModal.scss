@@ -5,3 +5,19 @@
 	border: 1px solid $primary;
 
 }
+
+.dot {
+	display: flex;
+	height: 25px;
+	width: 25px;
+	background-color: #bbb;
+	border-radius: 50%;
+
+	&.green {
+		background-color: $turquoise;
+	}
+
+	&.red {
+		background-color: $darker-red
+	}
+}

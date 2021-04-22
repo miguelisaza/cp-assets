@@ -78,6 +78,15 @@ class AssetList extends Component {
 		return (
 			<div className="container">
 				<h1 className="text-center my-2">Asset List</h1>
+				<div className="d-none d-md-flex justify-content-center mb-3">
+					<div className="d-flex mx-3">
+						<span className="dot green" />
+						Published
+					</div>
+					<div className="d-flex mx-3">
+						<span className="dot red" /> Unpublished
+					</div>
+				</div>
 				<div id="list-header" className="d-none d-md-flex">
 					<div className="col-2">Name</div>
 					<div className="col-4">Description</div>

@@ -44,10 +44,14 @@ class DetailsModal extends Component {
 
 	resetModal = () => this.setState(this.initalState);
 
-	updateField = ({ target : { name, value } }) => this.setState((prevState) => ({
+	updateField = ({
+		target : {
+			name, type, value, checked,
+		},
+	}) => this.setState((prevState) => ({
 		form : {
 			...prevState.form,
-			[name] : value,
+			[name] : type === 'checkbox' ? checked : value,
 		},
 	}))
 
@@ -118,7 +122,7 @@ class DetailsModal extends Component {
 		const {
 			isOpen, isEditing, tagCreationToggle, newTagName,
 			form : {
-				assetName, description, category, tags, assetFiles,
+				assetName, description, category, tags, assetFiles, isPublished,
 			},
 		} = this.state;
 
@@ -197,6 +201,19 @@ class DetailsModal extends Component {
 								handleOnChange={this.addTag}
 								handleOnDelete={this.removeTag}
 							/>
+						</div>
+						<div className="form-check">
+							<input
+								className="form-check-input"
+								type="checkbox"
+								name="isPublished"
+								checked={isPublished}
+								onChange={this.updateField}
+								id="publish-asset"
+							/>
+							<label className="form-check-label" htmlFor="publish-asset">
+								Publish Asset
+							</label>
 						</div>
 					</form>
 					{ assetFiles.length > 0 && (
