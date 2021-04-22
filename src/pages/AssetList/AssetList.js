@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
-import { Asset, DetailsModal } from '../../components';
+import { Asset, DetailsModal, ConfirmationModal } from '../../components';
 
 class AssetList extends Component {
 	constructor(props) {
@@ -49,9 +49,13 @@ class AssetList extends Component {
 		this._detailsModal.openModal(assetList.find((asset) => asset.id === id));
 	}
 
-	deleteAsset = (id) => this.setState((prevState) => ({
-		assetList : prevState.assetList.filter((asset) => asset.id !== id),
-	}))
+	deleteAsset = (id) => {
+		this._confirmationModal.openModal({
+			dialog    : 'Are you sure you want to delete this asset?, all the associated files will be deleted.',
+			onConfirm : () => { this.setState((prevState) => ({ assetList : prevState.assetList.filter((asset) => asset.id !== id) })); },
+			onCancel  : () => {},
+		});
+	}
 
 	render() {
 		const { assetList } = this.state;
@@ -60,10 +64,6 @@ class AssetList extends Component {
 				{ assetList.map((asset) => (
 					<Asset {...asset} onEdit={this.editAsset} onDelete={this.deleteAsset} />
 				)) }
-				<DetailsModal
-					onSubmit={this.saveAsset}
-					ref={(ref) => { this._detailsModal = ref; }}
-				/>
 				<div className="text-center">
 					<button
 						type="button"
@@ -73,6 +73,11 @@ class AssetList extends Component {
 					>Add asset with modal
 					</button>
 				</div>
+				<DetailsModal
+					onSubmit={this.saveAsset}
+					ref={(ref) => { this._detailsModal = ref; }}
+				/>
+				<ConfirmationModal ref={(ref) => { this._confirmationModal = ref; }} />
 			</div>
 		);
 	}
