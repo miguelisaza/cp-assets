@@ -8,10 +8,14 @@ class DetailsModal extends Component {
 	constructor(props) {
 		super(props);
 
+		this.tagList = [...TAG_LIST];
+
 		this.initalState = {
-			isOpen    : false,
-			isEditing : false,
-			form      : {
+			isOpen            : false,
+			isEditing         : false,
+			tagCreationToggle : false,
+			newTagName        : '',
+			form              : {
 				id          : null,
 				assetName   : '',
 				description : '',
@@ -40,10 +44,20 @@ class DetailsModal extends Component {
 		},
 	}))
 
+	createTag = () => {
+		const { newTagName } = this.state;
+
+		this.tagList.push(newTagName);
+
+		this.setState({ tagCreationToggle : false });
+	}
+
+	toggleTagField = () => this.setState((prevState) => ({ tagCreationToggle : !prevState.tagCreationToggle }));
+
 	addTag = ({ target : { value } }) => {
 		const { form : { tags } } = this.state;
 
-		const newTag = TAG_LIST.find((item) => item.toString() === value);
+		const newTag = this.tagList.find((item) => item.toString() === value);
 		this.setState((prevState) => ({ form : { ...prevState.form, tags : [...tags, newTag] } }));
 	}
 
@@ -66,7 +80,8 @@ class DetailsModal extends Component {
 
 	render() {
 		const {
-			isOpen, isEditing, form : {
+			isOpen, isEditing, tagCreationToggle, newTagName,
+			form : {
 				assetName, description, category, tags,
 			},
 		} = this.state;
@@ -121,11 +136,26 @@ class DetailsModal extends Component {
 						</div>
 						<div className="form-group">
 							<label htmlFor="select-tags">Tags</label>
+							<button type="button" onClick={this.toggleTagField} className="btn btn-link pull-right">Add tag</button>
+							{ tagCreationToggle && (
+								<div className="input-group my-2">
+									<input
+										type="text"
+										className="form-control"
+										placeholder="Tag name"
+										aria-label="Tag name"
+										aria-describedby="tag-create"
+										onChange={({ target : { value } }) => { this.setState({ newTagName : value }); }}
+										value={newTagName}
+									/>
+									<button className="btn btn-outline-primary" type="button" id="tag-create" onClick={this.createTag}>Create</button>
+								</div>
+							) }
 							<TagPicker
 								labelText="Tags"
 								id="select-tags"
 								defaultOption="Select some tags"
-								optionList={TAG_LIST}
+								optionList={this.tagList}
 								storedOptionList={tags}
 								handleOnChange={this.addTag}
 								handleOnDelete={this.removeTag}
