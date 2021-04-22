@@ -16,7 +16,7 @@ const TagPicker = (props) => {
 	return (
 		<div className="tag-picker" id={id}>
 			<select
-				name="selectBadges"
+				name="tagPicker"
 				className="form-control"
 				onChange={(e) => handleOnChange(e)}
 			>

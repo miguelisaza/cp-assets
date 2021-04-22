@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './Asset.scss';
 
 const Asset = ({
-	assetName, description, category, tags, isPublished, id, onEdit,
+	assetName, description, category, tags, isPublished, id, onEdit, onDelete,
 }) => (
 	<div className={`asset ${isPublished ? 'published' : 'unpublished'}`}>
 		<div className="asset-header">
@@ -23,7 +23,7 @@ const Asset = ({
 					<button type="button" className="btn btn-block btn-primary" onClick={() => onEdit(id)}>Edit</button>
 				</div>
 				<div className="col-6">
-					<button type="button" className="btn btn-block btn-secondary">Remove</button>
+					<button type="button" className="btn btn-block btn-secondary" onClick={() => onDelete(id)}>Remove</button>
 				</div>
 			</div>
 		</div>
@@ -37,6 +37,7 @@ Asset.propTypes = {
 	tags        : PropTypes.array,
 	id          : PropTypes.number.isRequired,
 	onEdit      : PropTypes.func.isRequired,
+	onDelete    : PropTypes.func.isRequired,
 	isPublished : PropTypes.bool,
 };
 

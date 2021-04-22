@@ -49,12 +49,16 @@ class AssetList extends Component {
 		this._detailsModal.openModal(assetList.find((asset) => asset.id === id));
 	}
 
+	deleteAsset = (id) => this.setState((prevState) => ({
+		assetList : prevState.assetList.filter((asset) => asset.id !== id),
+	}))
+
 	render() {
 		const { assetList } = this.state;
 		return (
 			<div id="asset-list">
 				{ assetList.map((asset) => (
-					<Asset {...asset} onEdit={this.editAsset} />
+					<Asset {...asset} onEdit={this.editAsset} onDelete={this.deleteAsset} />
 				)) }
 				<DetailsModal
 					onSubmit={this.saveAsset}
