@@ -1,3 +1,5 @@
+@import '../../colors.scss';
+
 .files{
 	position: relative;
 
@@ -11,7 +13,7 @@
 		height: 57px;
 		content: " or drag it here. ";
 		display: block;
-		color: #2ea591;
+		color: $blueish-gray;
 		text-align: center;
 	}
 
@@ -32,7 +34,7 @@
 	}
 
 	input {
-		outline: 2px dashed #92b0b3;
+		outline: 2px dashed $blueish-gray;
 		outline-offset: -10px;
 		transition: outline-offset .15s ease-in-out, background-color .15s linear;
 		padding: 6em 0px 7rem 17%;
@@ -41,7 +43,8 @@
 		width: 100% !important;
 
 		&:focus {
-			outline: 2px dashed #92b0b3;  outline-offset: -10px;
+			outline: 2px dashed $blueish-gray;
+			outline-offset: -10px;
 			transition: outline-offset .15s ease-in-out, background-color .15s linear; border:1px solid #92b0b3
 		}
 	}

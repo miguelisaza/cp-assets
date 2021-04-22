@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './Asset.scss';
 
 const Asset = ({
-	assetName, description, category, tags, isPublished, id, onEdit, onDelete,
+	assetName, description, category, tags, isPublished, id, onEdit, onDelete, downloadFiles,
 }) => (
 	<div className={`asset ${isPublished ? 'published' : 'unpublished'}`}>
 		<div className="asset-header d-flex d-md-none">
@@ -26,6 +26,7 @@ const Asset = ({
 				{category}
 			</div>
 			<div className="order-md-5 col-md-2">
+				<button type="button" className="btn btn-block btn-link" onClick={() => downloadFiles(id)}>Download Files</button>
 				<button type="button" className="btn btn-block btn-primary" onClick={() => onEdit(id)}>Edit</button>
 				<button type="button" className="btn btn-block btn-secondary" onClick={() => onDelete(id)}>Remove</button>
 			</div>
@@ -34,14 +35,15 @@ const Asset = ({
 );
 
 Asset.propTypes = {
-	assetName   : PropTypes.string,
-	description : PropTypes.string,
-	category    : PropTypes.string,
-	tags        : PropTypes.array,
-	id          : PropTypes.number.isRequired,
-	onEdit      : PropTypes.func.isRequired,
-	onDelete    : PropTypes.func.isRequired,
-	isPublished : PropTypes.bool,
+	assetName     : PropTypes.string,
+	description   : PropTypes.string,
+	category      : PropTypes.string,
+	tags          : PropTypes.array,
+	id            : PropTypes.number.isRequired,
+	onEdit        : PropTypes.func.isRequired,
+	onDelete      : PropTypes.func.isRequired,
+	downloadFiles : PropTypes.func.isRequired,
+	isPublished   : PropTypes.bool,
 };
 
 Asset.defaultProps = {

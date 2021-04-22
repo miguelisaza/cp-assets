@@ -1,3 +1,5 @@
+@import '../../colors.scss';
+
 .tag-picker {
 	margin-bottom: 2rem;
 	.option-list {
@@ -7,8 +9,8 @@
 			margin-bottom: 0.5rem;
 			display: inline-block;
 			button span {
-				background-color: white;
-				color: #2b2e4a;
+				background-color: $secondary;
+				color: $night-blue;
 				margin-left: .5rem;
 			}
 		}

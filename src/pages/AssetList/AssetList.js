@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
+import FileSaver from 'file-saver';
 import {
 	Asset, DetailsModal, ConfirmationModal, FileBox,
 } from '../../components';
@@ -65,6 +66,13 @@ class AssetList extends Component {
 		this._detailsModal.openModal({ assetFiles : files });
 	}
 
+	downloadAssetFiles = (id) => {
+		const { assetList } = this.state;
+		assetList.find((asset) => asset.id === id).assetFiles.forEach((file) => {
+			FileSaver.saveAs(file, file.name);
+		});
+	}
+
 	render() {
 		const { assetList } = this.state;
 		return (
@@ -79,7 +87,13 @@ class AssetList extends Component {
 				</div>
 				<div id="asset-list">
 					{ assetList.map((asset) => (
-						<Asset {...asset} onEdit={this.editAsset} onDelete={this.deleteAsset} />
+						<Asset
+							{...asset}
+							key={asset.id}
+							onEdit={this.editAsset}
+							onDelete={this.deleteAsset}
+							downloadFiles={this.downloadAssetFiles}
+						/>
 					)) }
 				</div>
 				<div className="text-center my-2">
@@ -88,8 +102,10 @@ class AssetList extends Component {
 						className="btn btn-primary"
 						onClick={() => this._detailsModal.openModal()}
 
-					>Add asset with modal
+					>Add a new asset with this modal
 					</button>
+					<br />
+					or
 				</div>
 				<FileBox onFileLoad={this.receiveFiles} />
 				<DetailsModal

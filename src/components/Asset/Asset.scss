@@ -1,19 +1,5 @@
 @import "bootstrap";
-
-// fonts
-$primary   : #000000;
-$secondary : #FFFFFF;
-
-// unposted theme
-$night-blue  : #2b2e4a;
-$darker-red  : #903749;
-$soft-purple : #53354a;
-
-// posted theme
-$leaf-green : #1e6f5c;
-$turquoise  : #29bb89;
-$emerald    : #289672;
-
+@import '../../colors.scss';
 
 .asset {
 	margin-bottom: 1rem;
