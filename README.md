@@ -5,10 +5,10 @@
 This is a sample project created with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
-To instal the project and al it's dependencies, just run
+To install the project and all it's dependencies, just run
 ### `npm install`
 
-After the installation is complete, you can run:
+After the installation is completed, you can run:
 
 ### `npm start`
 
